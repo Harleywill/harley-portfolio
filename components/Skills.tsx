@@ -69,7 +69,7 @@ export default function Skills() {
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className="bg-black rounded-xl p-8 border border-gray-700 hover:border-accent-lime/50 transition-all duration-300 animate-slideUp"
+              className="bg-black/50 backdrop-blur-md rounded-xl p-8 border border-gray-700 hover:border-accent-lime/50 transition-all duration-300 animate-slideUp"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center gap-4 mb-6">

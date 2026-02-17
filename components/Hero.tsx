@@ -29,22 +29,20 @@ export default function Hero() {
     <section className="min-h-screen flex flex-col justify-center items-start px-6 md:px-12 lg:px-20 relative overflow-hidden">
       <motion.div
         className="relative z-10 max-w-4xl"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+        style={{ opacity: 1 }}
       >
         {/* Greeting */}
         <motion.p
-          variants={itemVariants}
           className="text-accent-lime text-lg md:text-xl mb-4 font-medium"
+          style={{ opacity: 1 }}
         >
           Hi there, I&apos;m Harley
         </motion.p>
 
         {/* Main headline */}
         <motion.h1
-          variants={itemVariants}
           className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6"
+          style={{ opacity: 1 }}
         >
           Full Stack
           <br />
@@ -55,15 +53,15 @@ export default function Hero() {
 
         {/* Description */}
         <motion.p
-          variants={itemVariants}
           className="text-text-secondary text-base md:text-lg max-w-2xl mb-8 leading-relaxed"
+          style={{ opacity: 1 }}
         >
           I build scalable web applications using React, Node.js, MongoDB, and more.
           Specializing in creating seamless user experiences and robust backend systems.
         </motion.p>
 
         {/* CTA Buttons */}
-        <motion.div variants={itemVariants} className="flex gap-4 flex-wrap">
+        <motion.div className="flex gap-4 flex-wrap" style={{ opacity: 1 }}>
           <motion.a
             href="#projects"
             className="px-8 py-4 bg-accent-lime text-dark font-bold rounded-lg hover:shadow-lg hover:shadow-accent-lime/50"

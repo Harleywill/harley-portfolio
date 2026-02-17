@@ -11,19 +11,40 @@ export default function Contact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Send email via FormSubmit or similar service
-    const mailtoLink = `mailto:Hjakewilliams@gmail.com?subject=Portfolio Inquiry from ${formData.name}&body=${formData.message}%0A%0AFrom: ${formData.email}`
-    window.location.href = mailtoLink
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send email')
+      }
+
+      setSubmitted(true)
+      setFormData({ name: '', email: '', message: '' })
+      setTimeout(() => setSubmitted(false), 5000)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send email. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -138,10 +159,17 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full px-8 py-4 bg-accent-lime text-dark font-bold rounded-lg hover:shadow-lg hover:shadow-accent-lime/50 transform hover:scale-105 transition-all"
+              disabled={loading}
+              className="w-full px-8 py-4 bg-accent-lime text-dark font-bold rounded-lg hover:shadow-lg hover:shadow-accent-lime/50 transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message
+              {loading ? 'Sending...' : 'Send Message'}
             </button>
+
+            {error && (
+              <p className="mt-4 text-center text-red-500 font-semibold animate-fadeIn">
+                {error}
+              </p>
+            )}
 
             {submitted && (
               <p className="mt-4 text-center text-accent-lime font-semibold animate-fadeIn">
