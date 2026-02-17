@@ -59,26 +59,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Add subscriber to MailerLite
+    // Add subscriber to MailerLite (fire and forget - don't await)
     if (MAILERLITE_API_KEY) {
-      try {
-        await fetch('https://api.mailerlite.com/api/v1/subscribers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-MailerLite-Token': MAILERLITE_API_KEY,
+      fetch('https://api.mailerlite.com/api/v1/subscribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-MailerLite-Token': MAILERLITE_API_KEY,
+        },
+        body: JSON.stringify({
+          email: email,
+          name: name,
+          fields: {
+            portfolio_message: message,
           },
-          body: JSON.stringify({
-            email: email,
-            name: name,
-            fields: {
-              portfolio_message: message,
-            },
-          }),
-        })
-      } catch (err) {
-        console.error('Error adding subscriber to MailerLite:', err)
-      }
+        }),
+      }).catch((err) => console.error('Error adding subscriber to MailerLite:', err))
     }
 
     // Log the contact form submission
