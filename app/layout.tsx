@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   title: 'Harley Williams | Full Stack Developer',
   description: 'Full Stack Developer specializing in React, Node.js, and MongoDB. Building scalable web applications.',
   icons: {
-    icon: '/icon.png',
-    apple: '/icon.png',
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
   },
 }
 

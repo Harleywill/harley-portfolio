@@ -1,43 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
 
-const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY
 const RECIPIENT_EMAIL = 'hjakewilliams@gmail.com'
-const GMAIL_USER = process.env.GMAIL_USER
-const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD
-
-// Send email in background without blocking response
-async function sendEmailInBackground(name: string, email: string, message: string) {
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: GMAIL_USER,
-        pass: GMAIL_APP_PASSWORD,
-      },
-      connectionTimeout: 5000,
-      socketTimeout: 5000,
-    })
-
-    await transporter.sendMail({
-      from: GMAIL_USER,
-      to: RECIPIENT_EMAIL,
-      subject: `New Contact Form Submission from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-        <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
-      `,
-    })
-
-    console.log(`✅ Email sent to ${RECIPIENT_EMAIL} from ${name}`)
-  } catch (err) {
-    console.error('❌ Error sending email:', err)
-  }
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -51,30 +14,41 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Send email notification to website owner (asynchronously, don't wait)
-    if (GMAIL_USER && GMAIL_APP_PASSWORD) {
-      // Send in background without awaiting to avoid blocking the response
-      sendEmailInBackground(name, email, message).catch((err) =>
-        console.error('Background email error:', err)
-      )
-    }
+    // Send email in background (completely non-blocking)
+    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      // Fire and forget - don't await, use setImmediate to ensure response is sent first
+      setImmediate(async () => {
+        try {
+          const nodemailer = await import('nodemailer')
+          const transporter = nodemailer.default.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.GMAIL_USER,
+              pass: process.env.GMAIL_APP_PASSWORD,
+            },
+            connectionTimeout: 3000,
+            socketTimeout: 3000,
+          })
 
-    // Add subscriber to MailerLite (fire and forget - don't await)
-    if (MAILERLITE_API_KEY) {
-      fetch('https://api.mailerlite.com/api/v1/subscribers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-MailerLite-Token': MAILERLITE_API_KEY,
-        },
-        body: JSON.stringify({
-          email: email,
-          name: name,
-          fields: {
-            portfolio_message: message,
-          },
-        }),
-      }).catch((err) => console.error('Error adding subscriber to MailerLite:', err))
+          await transporter.sendMail({
+            from: process.env.GMAIL_USER,
+            to: RECIPIENT_EMAIL,
+            subject: `New Contact Form Submission from ${name}`,
+            html: `
+              <h2>New Contact Form Submission</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Message:</strong></p>
+              <p>${message.replace(/\n/g, '<br>')}</p>
+              <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
+            `,
+          })
+
+          console.log(`✅ Email sent to ${RECIPIENT_EMAIL} from ${name}`)
+        } catch (err) {
+          console.error('❌ Error sending email:', err)
+        }
+      })
     }
 
     // Log the contact form submission
@@ -89,7 +63,7 @@ Time: ${new Date().toISOString()}`)
       { status: 200 }
     )
   } catch (error) {
-    console.error('Email send error:', error)
+    console.error('Error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
