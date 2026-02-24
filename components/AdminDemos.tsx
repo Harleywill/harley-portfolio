@@ -260,6 +260,20 @@ export default function AdminDemos() {
     )
   }
 
+  // User Functions
+  const deleteUser = (id: string) => {
+    setUsers(users.filter(u => u.id !== id))
+  }
+
+  // B2B Trade Functions
+  const approveTrade = () => {
+    alert('Trade application approved! Notification sent to customer.')
+  }
+
+  const rejectTrade = () => {
+    alert('Trade application rejected! Notification sent to customer.')
+  }
+
   return (
     <section className="relative py-20 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
@@ -295,22 +309,37 @@ export default function AdminDemos() {
           {/* Analytics Demo */}
           {activeTab === 'analytics' && (
             <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold mb-4 text-white">GA4 Real-Time Metrics</h3>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                  {[
-                    { label: 'Active Users (24h)', value: '2,391', trend: '+12%' },
-                    { label: 'Sessions', value: '12,456', trend: '+8%' },
-                    { label: 'Page Views', value: '34,891', trend: '+15%' },
-                    { label: 'Bounce Rate', value: '16.4%', trend: '-3%' },
-                  ].map((metric, idx) => (
-                    <div key={idx} className="bg-dark/50 p-4 rounded-lg border border-gray-700/30">
-                      <p className="text-gray-400 text-sm mb-1">{metric.label}</p>
-                      <p className="text-2xl font-bold text-white">{metric.value}</p>
-                      <p className="text-accent-lime text-sm mt-1">{metric.trend}</p>
-                    </div>
-                  ))}
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-white">GA4 Real-Time Metrics</h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => alert('Analytics data refreshed!')}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90 transition"
+                  >
+                    🔄 Refresh
+                  </button>
+                  <button
+                    onClick={() => alert('Analytics exported as PDF')}
+                    className="px-4 py-2 bg-accent-orange text-dark rounded-lg font-semibold hover:bg-accent-orange/90 transition"
+                  >
+                    📥 Export
+                  </button>
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                {[
+                  { label: 'Active Users (24h)', value: '2,391', trend: '+12%' },
+                  { label: 'Sessions', value: '12,456', trend: '+8%' },
+                  { label: 'Page Views', value: '34,891', trend: '+15%' },
+                  { label: 'Bounce Rate', value: '16.4%', trend: '-3%' },
+                ].map((metric, idx) => (
+                  <div key={idx} className="bg-dark/50 p-4 rounded-lg border border-gray-700/30 cursor-pointer hover:border-accent-lime/50 transition">
+                    <p className="text-gray-400 text-sm mb-1">{metric.label}</p>
+                    <p className="text-2xl font-bold text-white">{metric.value}</p>
+                    <p className="text-accent-lime text-sm mt-1">{metric.trend}</p>
+                  </div>
+                ))}
               </div>
 
               <div>
@@ -327,6 +356,21 @@ export default function AdminDemos() {
                   </LineChart>
                 </ResponsiveContainer>
               </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => alert('Email report sent to admin@trventilation.com')}
+                  className="flex-1 px-4 py-2 bg-dark border border-gray-700/50 rounded-lg font-semibold text-gray-400 hover:text-white hover:border-gray-600 transition"
+                >
+                  📧 Email Report
+                </button>
+                <button
+                  onClick={() => alert('Analytics settings updated')}
+                  className="flex-1 px-4 py-2 bg-dark border border-gray-700/50 rounded-lg font-semibold text-gray-400 hover:text-white hover:border-gray-600 transition"
+                >
+                  ⚙️ Settings
+                </button>
+              </div>
             </div>
           )}
 
@@ -335,12 +379,20 @@ export default function AdminDemos() {
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-bold text-white">Product Management</h3>
-                <button
-                  onClick={() => setEditingProduct(editingProduct === 0 ? null : 0)}
-                  className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
-                >
-                  {editingProduct === 0 ? '✕ Cancel' : '+ Add Product'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setEditingProduct(editingProduct === 0 ? null : 0)}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    {editingProduct === 0 ? '✕ Cancel' : '+ Add Product'}
+                  </button>
+                  <button
+                    onClick={() => alert('Products exported as CSV')}
+                    className="px-4 py-2 bg-accent-orange text-dark rounded-lg font-semibold hover:bg-accent-orange/90"
+                  >
+                    📥 Export
+                  </button>
+                </div>
               </div>
 
               {editingProduct === 0 && (
@@ -417,7 +469,19 @@ export default function AdminDemos() {
                             {product.status}
                           </span>
                         </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3 px-4 flex gap-2">
+                          <button
+                            onClick={() => alert(`Viewing details for ${product.name} (SKU: ${product.sku})`)}
+                            className="text-accent-lime hover:text-accent-lime/80 font-semibold text-sm"
+                          >
+                            View
+                          </button>
+                          <button
+                            onClick={() => alert(`Editing product: ${product.name}`)}
+                            className="text-accent-orange hover:text-accent-orange/80 font-semibold text-sm"
+                          >
+                            Edit
+                          </button>
                           <button
                             onClick={() => deleteProduct(product.id)}
                             className="text-red-400 hover:text-red-300 font-semibold text-sm"
@@ -477,7 +541,7 @@ export default function AdminDemos() {
               <div className="space-y-3">
                 {orders.map((order) => (
                   <div key={order.id} className="bg-dark/50 p-4 rounded-lg border border-gray-700/30 hover:border-accent-lime/50 transition">
-                    <div className="flex justify-between items-start">
+                    <div className="flex justify-between items-start mb-3">
                       <div>
                         <p className="text-white font-bold text-lg">{order.id}</p>
                         <p className="text-gray-400 text-sm">{order.customer}</p>
@@ -505,6 +569,32 @@ export default function AdminDemos() {
                         </select>
                       </div>
                     </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => alert(`Viewing details for order ${order.id} - ${order.items} items`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-lime/50 text-gray-400 hover:text-accent-lime transition"
+                      >
+                        View Details
+                      </button>
+                      <button
+                        onClick={() => alert(`Generating invoice for ${order.id}...`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-lime/50 text-gray-400 hover:text-accent-lime transition"
+                      >
+                        Generate Invoice
+                      </button>
+                      <button
+                        onClick={() => alert(`Sending email notification to ${order.customer}...`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-orange/50 text-gray-400 hover:text-accent-orange transition"
+                      >
+                        Send Email
+                      </button>
+                      <button
+                        onClick={() => alert(`Tracking info sent to ${order.customer}`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-orange/50 text-gray-400 hover:text-accent-orange transition"
+                      >
+                        Track
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -516,12 +606,20 @@ export default function AdminDemos() {
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-bold text-white">Discount Code Management</h3>
-                <button
-                  onClick={() => setShowNewDiscount(!showNewDiscount)}
-                  className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
-                >
-                  {showNewDiscount ? '✕ Cancel' : '+ Create Code'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowNewDiscount(!showNewDiscount)}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    {showNewDiscount ? '✕ Cancel' : '+ Create Code'}
+                  </button>
+                  <button
+                    onClick={() => alert('Discount codes exported as CSV')}
+                    className="px-4 py-2 bg-accent-orange text-dark rounded-lg font-semibold hover:bg-accent-orange/90"
+                  >
+                    📊 Analytics
+                  </button>
+                </div>
               </div>
 
               {showNewDiscount && (
@@ -599,10 +697,22 @@ export default function AdminDemos() {
 
                     <div className="flex gap-2">
                       <button
+                        onClick={() => alert(`Editing discount code ${discount.code}`)}
+                        className="flex-1 px-3 py-2 bg-dark border border-gray-700/50 rounded hover:border-accent-lime/50 text-gray-400 hover:text-accent-lime text-sm font-semibold transition"
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button
+                        onClick={() => alert(`Viewing analytics for ${discount.code}\n\nTotal Uses: ${discount.uses}\nRevenue: £${(discount.uses * 15.5).toFixed(2)}`)}
+                        className="flex-1 px-3 py-2 bg-dark border border-gray-700/50 rounded hover:border-accent-orange/50 text-gray-400 hover:text-accent-orange text-sm font-semibold transition"
+                      >
+                        📈 Stats
+                      </button>
+                      <button
                         onClick={() => deleteDiscount(discount.code)}
                         className="flex-1 px-3 py-2 bg-red-500/20 border border-red-500/30 rounded hover:border-red-500/60 text-red-400 text-sm font-semibold transition"
                       >
-                        Delete
+                        🗑️ Delete
                       </button>
                     </div>
                   </div>
@@ -678,6 +788,7 @@ export default function AdminDemos() {
                       <th className="text-left py-3 px-4 text-gray-400 font-semibold">Joined</th>
                       <th className="text-left py-3 px-4 text-gray-400 font-semibold">Orders</th>
                       <th className="text-left py-3 px-4 text-gray-400 font-semibold">Total Spent</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-semibold">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -688,6 +799,14 @@ export default function AdminDemos() {
                         <td className="py-3 px-4 text-gray-400">{user.joinDate}</td>
                         <td className="py-3 px-4 text-white">{user.orders}</td>
                         <td className="py-3 px-4 text-accent-lime font-semibold">£{user.totalSpent.toFixed(2)}</td>
+                        <td className="py-3 px-4">
+                          <button
+                            onClick={() => deleteUser(user.id)}
+                            className="text-red-400 hover:text-red-300 font-semibold text-sm"
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -699,7 +818,24 @@ export default function AdminDemos() {
           {/* RMA Demo */}
           {activeTab === 'rma' && (
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white">Return & Exchange Management</h3>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-white">Return & Exchange Management</h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => alert('RMA list exported as CSV')}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    📥 Export List
+                  </button>
+                  <button
+                    onClick={() => alert('Generating shipping labels for all approved RMAs...')}
+                    className="px-4 py-2 bg-accent-orange text-dark rounded-lg font-semibold hover:bg-accent-orange/90"
+                  >
+                    🏷️ Generate Labels
+                  </button>
+                </div>
+              </div>
+
               <div className="space-y-3">
                 {rmas.map((rma) => (
                   <div key={rma.rmaNumber} className="bg-dark/50 p-4 rounded-lg border border-gray-700/30">
@@ -728,8 +864,28 @@ export default function AdminDemos() {
                         <option value="completed">Completed</option>
                       </select>
                     </div>
-                    <p className="text-gray-300 text-sm">Reason: {rma.reason}</p>
-                    <p className="text-gray-500 text-xs mt-2">Requested: {rma.date}</p>
+                    <p className="text-gray-300 text-sm mb-3">Reason: {rma.reason}</p>
+                    <p className="text-gray-500 text-xs mb-3">Requested: {rma.date}</p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => alert(`Viewing details for ${rma.rmaNumber}`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-lime/50 text-gray-400 hover:text-accent-lime transition"
+                      >
+                        View Details
+                      </button>
+                      <button
+                        onClick={() => alert(`Sending return label to customer for ${rma.rmaNumber}`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-lime/50 text-gray-400 hover:text-accent-lime transition"
+                      >
+                        Send Label
+                      </button>
+                      <button
+                        onClick={() => alert(`Inspection scheduled for ${rma.rmaNumber}`)}
+                        className="flex-1 text-xs px-2 py-1 rounded border border-gray-700/50 hover:border-accent-orange/50 text-gray-400 hover:text-accent-orange transition"
+                      >
+                        Inspect
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -739,7 +895,23 @@ export default function AdminDemos() {
           {/* Shipping Demo */}
           {activeTab === 'shipping' && (
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-white">Shipping Settings</h3>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-white">Shipping Settings</h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => alert('Shipping rates saved successfully!')}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    💾 Save Changes
+                  </button>
+                  <button
+                    onClick={() => alert('Shipping rates reset to default values')}
+                    className="px-4 py-2 bg-accent-orange text-dark rounded-lg font-semibold hover:bg-accent-orange/90"
+                  >
+                    🔄 Reset to Default
+                  </button>
+                </div>
+              </div>
               <div className="space-y-4">
                 {shippingZones.map((zone) => (
                   <div key={zone.zone} className="bg-dark/50 p-6 rounded-lg border border-gray-700/30">
@@ -787,17 +959,36 @@ export default function AdminDemos() {
                 <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30">
                   <p className="text-gray-400 text-sm mb-1">Pending Applications</p>
                   <p className="text-4xl font-bold text-accent-lime">3</p>
-                  <button className="mt-3 text-accent-lime text-sm font-semibold hover:text-accent-lime/80">Review →</button>
+                  <div className="flex gap-2 mt-3">
+                    <button
+                      onClick={approveTrade}
+                      className="flex-1 text-accent-lime text-sm font-semibold hover:text-accent-lime/80 px-3 py-2 rounded border border-accent-lime/30 hover:border-accent-lime/60 transition"
+                    >
+                      ✓ Approve
+                    </button>
+                    <button
+                      onClick={rejectTrade}
+                      className="flex-1 text-red-400 text-sm font-semibold hover:text-red-300 px-3 py-2 rounded border border-red-400/30 hover:border-red-400/60 transition"
+                    >
+                      ✕ Reject
+                    </button>
+                  </div>
                 </div>
                 <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30">
                   <p className="text-gray-400 text-sm mb-1">Approved Accounts</p>
                   <p className="text-4xl font-bold text-accent-orange">24</p>
-                  <button className="mt-3 text-accent-orange text-sm font-semibold hover:text-accent-orange/80">Manage →</button>
+                  <button
+                    onClick={() => alert('Manage approved B2B accounts and credit limits')}
+                    className="mt-3 text-accent-orange text-sm font-semibold hover:text-accent-orange/80 px-3 py-2 rounded border border-accent-orange/30 hover:border-accent-orange/60 transition"
+                  >
+                    ⚙️ Manage →
+                  </button>
                 </div>
               </div>
+
               <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30">
                 <h4 className="text-lg font-bold text-white mb-4">Credit Account Summary</h4>
-                <div className="space-y-3">
+                <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
                     <span className="text-gray-400">Total Credit Issued</span>
                     <span className="text-white font-semibold">£45,230.00</span>
@@ -811,6 +1002,12 @@ export default function AdminDemos() {
                     <span className="text-accent-lime font-semibold">£13,380.00</span>
                   </div>
                 </div>
+                <button
+                  onClick={() => alert('Export credit report as CSV')}
+                  className="w-full px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90 transition"
+                >
+                  📊 Export Credit Report
+                </button>
               </div>
             </div>
           )}
