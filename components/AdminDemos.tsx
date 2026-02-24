@@ -14,36 +14,137 @@ const analyticsData = [
   { day: 'Sun', users: 2100, sessions: 3490, pageViews: 2100, bounce: 8 },
 ]
 
-// Product Management Demo
-const mockProducts = [
-  { id: 1, name: '100mm Inline Fan', category: 'Fans', price: 45.99, stock: 124, status: 'Active' },
-  { id: 2, name: 'Flexible Ducting 5m', category: 'Ducting', price: 32.50, stock: 87, status: 'Active' },
-  { id: 3, name: 'Damper Unit', category: 'Dampers', price: 28.00, stock: 0, status: 'Out of Stock' },
-  { id: 4, name: 'Wall Vent Adapter', category: 'Vents', price: 15.99, stock: 342, status: 'Active' },
-  { id: 5, name: 'Installation Kit', category: 'Accessories', price: 12.00, stock: 56, status: 'Low Stock' },
-]
+interface Product {
+  id: number
+  name: string
+  category: string
+  price: number
+  stock: number
+  status: 'Active' | 'Low Stock' | 'Out of Stock'
+}
 
-// Orders Demo
-const mockOrders = [
-  { id: '#ORD-001', customer: 'John Smith', amount: 245.99, status: 'Delivered', date: '2026-02-20' },
-  { id: '#ORD-002', customer: 'Sarah Johnson', amount: 156.50, status: 'Processing', date: '2026-02-22' },
-  { id: '#ORD-003', customer: 'Mike Brown', amount: 89.99, status: 'Shipped', date: '2026-02-23' },
-  { id: '#ORD-004', customer: 'Emma Wilson', amount: 312.75, status: 'Pending', date: '2026-02-24' },
-]
+interface Order {
+  id: string
+  customer: string
+  amount: number
+  status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered'
+  date: string
+}
 
-// Discount Codes Demo
-const mockDiscounts = [
-  { code: 'SAVE10', discount: '10%', uses: 234, maxUses: 500, active: true },
-  { code: 'FREESHIP', discount: 'Free Shipping', uses: 156, maxUses: 1000, active: true },
-  { code: 'SUMMER20', discount: '20%', uses: 89, maxUses: 200, active: false },
-  { code: 'VIP15', discount: '15%', uses: 45, maxUses: 100, active: true },
-]
+interface Discount {
+  code: string
+  discount: string
+  uses: number
+  maxUses: number
+  active: boolean
+}
 
 type DemoTab = 'analytics' | 'products' | 'orders' | 'discounts'
 
 export default function AdminDemos() {
   const [activeTab, setActiveTab] = useState<DemoTab>('analytics')
+
+  // Products State
+  const [products, setProducts] = useState<Product[]>([
+    { id: 1, name: '100mm Inline Fan', category: 'Fans', price: 45.99, stock: 124, status: 'Active' },
+    { id: 2, name: 'Flexible Ducting 5m', category: 'Ducting', price: 32.50, stock: 87, status: 'Active' },
+    { id: 3, name: 'Damper Unit', category: 'Dampers', price: 28.00, stock: 0, status: 'Out of Stock' },
+    { id: 4, name: 'Wall Vent Adapter', category: 'Vents', price: 15.99, stock: 342, status: 'Active' },
+    { id: 5, name: 'Installation Kit', category: 'Accessories', price: 12.00, stock: 56, status: 'Low Stock' },
+  ])
   const [editingProduct, setEditingProduct] = useState<number | null>(null)
+  const [newProduct, setNewProduct] = useState({ name: '', category: '', price: '', stock: '' })
+
+  // Orders State
+  const [orders, setOrders] = useState<Order[]>([
+    { id: '#ORD-001', customer: 'John Smith', amount: 245.99, status: 'Delivered', date: '2026-02-20' },
+    { id: '#ORD-002', customer: 'Sarah Johnson', amount: 156.50, status: 'Processing', date: '2026-02-22' },
+    { id: '#ORD-003', customer: 'Mike Brown', amount: 89.99, status: 'Shipped', date: '2026-02-23' },
+    { id: '#ORD-004', customer: 'Emma Wilson', amount: 312.75, status: 'Pending', date: '2026-02-24' },
+  ])
+  const [newOrder, setNewOrder] = useState({ customer: '', amount: '' })
+
+  // Discounts State
+  const [discounts, setDiscounts] = useState<Discount[]>([
+    { code: 'SAVE10', discount: '10%', uses: 234, maxUses: 500, active: true },
+    { code: 'FREESHIP', discount: 'Free Shipping', uses: 156, maxUses: 1000, active: true },
+    { code: 'SUMMER20', discount: '20%', uses: 89, maxUses: 200, active: false },
+    { code: 'VIP15', discount: '15%', uses: 45, maxUses: 100, active: true },
+  ])
+  const [newDiscount, setNewDiscount] = useState({ code: '', discount: '', maxUses: '' })
+  const [showNewDiscount, setShowNewDiscount] = useState(false)
+
+  // Product Functions
+  const addProduct = () => {
+    if (newProduct.name && newProduct.category && newProduct.price && newProduct.stock) {
+      setProducts([
+        ...products,
+        {
+          id: Math.max(...products.map(p => p.id), 0) + 1,
+          name: newProduct.name,
+          category: newProduct.category,
+          price: parseFloat(newProduct.price),
+          stock: parseInt(newProduct.stock),
+          status: parseInt(newProduct.stock) === 0 ? 'Out of Stock' : parseInt(newProduct.stock) < 100 ? 'Low Stock' : 'Active',
+        },
+      ])
+      setNewProduct({ name: '', category: '', price: '', stock: '' })
+      setEditingProduct(null)
+    }
+  }
+
+  const deleteProduct = (id: number) => {
+    setProducts(products.filter(p => p.id !== id))
+  }
+
+  // Order Functions
+  const addOrder = () => {
+    if (newOrder.customer && newOrder.amount) {
+      const currentOrders = orders.length > 0 ? orders : [{ id: '#ORD-000' }]
+      const orderNum = Math.max(...currentOrders.map(o => parseInt(o.id.split('-')[1])), 0) + 1
+      setOrders([
+        ...orders,
+        {
+          id: `#ORD-${String(orderNum).padStart(3, '0')}`,
+          customer: newOrder.customer,
+          amount: parseFloat(newOrder.amount),
+          status: 'Pending',
+          date: new Date().toISOString().split('T')[0],
+        },
+      ])
+      setNewOrder({ customer: '', amount: '' })
+    }
+  }
+
+  const updateOrderStatus = (orderId: string, newStatus: Order['status']) => {
+    setOrders(orders.map(o => (o.id === orderId ? { ...o, status: newStatus } : o)))
+  }
+
+  // Discount Functions
+  const addDiscount = () => {
+    if (newDiscount.code && newDiscount.discount && newDiscount.maxUses) {
+      setDiscounts([
+        ...discounts,
+        {
+          code: newDiscount.code,
+          discount: newDiscount.discount,
+          uses: 0,
+          maxUses: parseInt(newDiscount.maxUses),
+          active: true,
+        },
+      ])
+      setNewDiscount({ code: '', discount: '', maxUses: '' })
+      setShowNewDiscount(false)
+    }
+  }
+
+  const toggleDiscount = (code: string) => {
+    setDiscounts(discounts.map(d => (d.code === code ? { ...d, active: !d.active } : d)))
+  }
+
+  const deleteDiscount = (code: string) => {
+    setDiscounts(discounts.filter(d => d.code !== code))
+  }
 
   return (
     <section className="relative py-20 px-6 md:px-12 lg:px-20">
@@ -120,10 +221,55 @@ export default function AdminDemos() {
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-bold text-white">Product Management</h3>
-                <button className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90">
-                  + Add Product
+                <button
+                  onClick={() => setEditingProduct(editingProduct === 0 ? null : 0)}
+                  className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                >
+                  {editingProduct === 0 ? '✕ Cancel' : '+ Add Product'}
                 </button>
               </div>
+
+              {editingProduct === 0 && (
+                <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30 mb-6">
+                  <h4 className="text-lg font-bold mb-4 text-white">Add New Product</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input
+                      type="text"
+                      placeholder="Product Name"
+                      value={newProduct.name}
+                      onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Category"
+                      value={newProduct.category}
+                      onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Price (£)"
+                      value={newProduct.price}
+                      onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Stock"
+                      value={newProduct.stock}
+                      onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                  </div>
+                  <button
+                    onClick={addProduct}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    Create Product
+                  </button>
+                </div>
+              )}
 
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -138,7 +284,7 @@ export default function AdminDemos() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockProducts.map((product) => (
+                    {products.map((product) => (
                       <tr key={product.id} className="border-b border-gray-700/30 hover:bg-dark/30 transition">
                         <td className="py-3 px-4 text-white">{product.name}</td>
                         <td className="py-3 px-4 text-gray-400">{product.category}</td>
@@ -159,10 +305,10 @@ export default function AdminDemos() {
                         </td>
                         <td className="py-3 px-4">
                           <button
-                            onClick={() => setEditingProduct(editingProduct === product.id ? null : product.id)}
-                            className="text-accent-lime hover:text-accent-lime/80 font-semibold text-sm"
+                            onClick={() => deleteProduct(product.id)}
+                            className="text-red-400 hover:text-red-300 font-semibold text-sm"
                           >
-                            {editingProduct === product.id ? 'Save' : 'Edit'}
+                            Delete
                           </button>
                         </td>
                       </tr>
@@ -170,21 +316,6 @@ export default function AdminDemos() {
                   </tbody>
                 </table>
               </div>
-
-              {editingProduct && (
-                <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30 mt-6">
-                  <h4 className="text-lg font-bold mb-4 text-white">Edit Product</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="Product Name" className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white" />
-                    <input type="number" placeholder="Price" className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white" />
-                    <input type="number" placeholder="Stock" className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white" />
-                    <select className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white">
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select>
-                  </div>
-                </div>
-              )}
             </div>
           )}
 
@@ -193,18 +324,45 @@ export default function AdminDemos() {
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-bold text-white">Order Management</h3>
-                <select className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white">
-                  <option>All Orders</option>
-                  <option>Pending</option>
-                  <option>Processing</option>
-                  <option>Shipped</option>
-                  <option>Delivered</option>
-                </select>
+                <button
+                  onClick={() => setEditingProduct(editingProduct === -1 ? null : -1)}
+                  className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                >
+                  {editingProduct === -1 ? '✕ Cancel' : '+ Create Order'}
+                </button>
               </div>
 
+              {editingProduct === -1 && (
+                <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30 mb-6">
+                  <h4 className="text-lg font-bold mb-4 text-white">Create New Order</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <input
+                      type="text"
+                      placeholder="Customer Name"
+                      value={newOrder.customer}
+                      onChange={(e) => setNewOrder({ ...newOrder, customer: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Order Amount (£)"
+                      value={newOrder.amount}
+                      onChange={(e) => setNewOrder({ ...newOrder, amount: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                  </div>
+                  <button
+                    onClick={addOrder}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    Create Order
+                  </button>
+                </div>
+              )}
+
               <div className="space-y-3">
-                {mockOrders.map((order) => (
-                  <div key={order.id} className="bg-dark/50 p-4 rounded-lg border border-gray-700/30 hover:border-accent-lime/50 transition cursor-pointer">
+                {orders.map((order) => (
+                  <div key={order.id} className="bg-dark/50 p-4 rounded-lg border border-gray-700/30 hover:border-accent-lime/50 transition">
                     <div className="flex justify-between items-start">
                       <div>
                         <p className="text-white font-bold text-lg">{order.id}</p>
@@ -213,8 +371,10 @@ export default function AdminDemos() {
                       </div>
                       <div className="text-right">
                         <p className="text-accent-lime font-bold text-xl">£{order.amount.toFixed(2)}</p>
-                        <span
-                          className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mt-2 ${
+                        <select
+                          value={order.status}
+                          onChange={(e) => updateOrderStatus(order.id, e.target.value as Order['status'])}
+                          className={`mt-2 px-3 py-1 rounded-full text-xs font-semibold border-0 cursor-pointer ${
                             order.status === 'Delivered'
                               ? 'bg-green-500/20 text-green-400'
                               : order.status === 'Processing'
@@ -224,13 +384,13 @@ export default function AdminDemos() {
                                   : 'bg-yellow-500/20 text-yellow-400'
                           }`}
                         >
-                          {order.status}
-                        </span>
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
                       </div>
                     </div>
-                    <button className="text-accent-lime text-sm font-semibold mt-3 hover:text-accent-lime/80">
-                      View Details →
-                    </button>
                   </div>
                 ))}
               </div>
@@ -242,13 +402,51 @@ export default function AdminDemos() {
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-bold text-white">Discount Code Management</h3>
-                <button className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90">
-                  + Create Code
+                <button
+                  onClick={() => setShowNewDiscount(!showNewDiscount)}
+                  className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                >
+                  {showNewDiscount ? '✕ Cancel' : '+ Create Code'}
                 </button>
               </div>
 
+              {showNewDiscount && (
+                <div className="bg-dark/50 p-6 rounded-lg border border-gray-700/30 mb-6">
+                  <h4 className="text-lg font-bold mb-4 text-white">Create New Discount Code</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <input
+                      type="text"
+                      placeholder="Code (e.g., SUMMER20)"
+                      value={newDiscount.code}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, code: e.target.value.toUpperCase() })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Discount (e.g., 20% or Free Shipping)"
+                      value={newDiscount.discount}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, discount: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Max Uses"
+                      value={newDiscount.maxUses}
+                      onChange={(e) => setNewDiscount({ ...newDiscount, maxUses: e.target.value })}
+                      className="bg-dark border border-gray-700/50 rounded px-3 py-2 text-white placeholder-gray-500"
+                    />
+                  </div>
+                  <button
+                    onClick={addDiscount}
+                    className="px-4 py-2 bg-accent-lime text-dark rounded-lg font-semibold hover:bg-accent-lime/90"
+                  >
+                    Create Code
+                  </button>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {mockDiscounts.map((discount) => (
+                {discounts.map((discount) => (
                   <div
                     key={discount.code}
                     className="bg-dark/50 p-6 rounded-lg border border-gray-700/30 hover:border-accent-lime/50 transition"
@@ -258,13 +456,16 @@ export default function AdminDemos() {
                         <p className="text-white font-bold text-xl">{discount.code}</p>
                         <p className="text-accent-orange font-semibold text-lg mt-1">{discount.discount}</p>
                       </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          discount.active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                      <button
+                        onClick={() => toggleDiscount(discount.code)}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold transition ${
+                          discount.active
+                            ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                            : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
                         }`}
                       >
                         {discount.active ? 'Active' : 'Inactive'}
-                      </span>
+                      </button>
                     </div>
 
                     <div className="space-y-2 mb-4">
@@ -283,10 +484,10 @@ export default function AdminDemos() {
                     </div>
 
                     <div className="flex gap-2">
-                      <button className="flex-1 px-3 py-2 bg-dark border border-gray-700/50 rounded hover:border-gray-600 text-gray-400 text-sm font-semibold">
-                        Edit
-                      </button>
-                      <button className="flex-1 px-3 py-2 bg-dark border border-gray-700/50 rounded hover:border-gray-600 text-gray-400 text-sm font-semibold">
+                      <button
+                        onClick={() => deleteDiscount(discount.code)}
+                        className="flex-1 px-3 py-2 bg-red-500/20 border border-red-500/30 rounded hover:border-red-500/60 text-red-400 text-sm font-semibold transition"
+                      >
                         Delete
                       </button>
                     </div>
