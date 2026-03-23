@@ -12,7 +12,8 @@ const projects = [
     title: 'E-Commerce Analytics Dashboard',
     description: 'Real-time analytics dashboard integrated with Google Analytics 4. Displays key metrics like active users, sessions, page views, bounce rate with customizable time filters and automated performance monitoring.',
     technologies: ['React', 'GA4 API', 'Analytics', 'Dashboard', 'Node.js'],
-    accentColor: 'orange' as const,
+    accentColor: 'lime' as const,
+    link: 'https://analytics.google.com',
   },
   {
     title: 'Advanced Product Management System',
@@ -31,7 +32,7 @@ const projects = [
 export default function Projects() {
   return (
     <section id="projects" className="relative">
-      <div className="px-6 md:px-12 lg:px-20 pt-20 pb-12 max-w-7xl mx-auto">
+      <div className="px-6 md:px-12 lg:px-20 pt-8 pb-12 max-w-7xl mx-auto">
         <div className="animate-fadeIn">
           <h2 className="text-5xl md:text-6xl font-black mb-4">
             Featured <span className="text-accent-lime">Projects</span>
@@ -63,27 +64,19 @@ export default function Projects() {
                 {project.technologies.map((tech, idx) => (
                   <span
                     key={idx}
-                    className={`text-xs sm:text-sm font-semibold px-3 py-2 rounded-full whitespace-nowrap ${
-                      project.accentColor === 'lime'
-                        ? 'bg-accent-lime/20 text-accent-lime'
-                        : 'bg-accent-orange/20 text-accent-orange'
-                    }`}
+                    className="text-xs sm:text-sm font-semibold px-3 py-2 rounded-full whitespace-nowrap bg-accent-lime/20 text-accent-lime"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
 
-              {index === 0 && project.link && (
+              {project.link && (
                 <a
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-block font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105 w-fit relative z-10 text-sm sm:text-base ${
-                    project.accentColor === 'lime'
-                      ? 'bg-accent-lime text-dark hover:bg-accent-lime/90'
-                      : 'bg-accent-orange text-dark hover:bg-accent-orange/90'
-                  }`}
+                  className="inline-block font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105 w-fit relative z-10 text-sm sm:text-base bg-accent-lime text-dark hover:bg-accent-lime/90"
                 >
                   View Project →
                 </a>

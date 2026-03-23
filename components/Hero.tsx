@@ -61,7 +61,7 @@ export default function Hero() {
         </motion.p>
 
         {/* CTA Buttons */}
-        <motion.div className="flex gap-4 flex-wrap" style={{ opacity: 1 }}>
+        <motion.div className="flex gap-4 flex-wrap mb-12" style={{ opacity: 1 }}>
           <motion.a
             href="#projects"
             className="px-8 py-4 bg-accent-lime text-dark font-bold rounded-lg hover:shadow-lg hover:shadow-accent-lime/50"
@@ -78,6 +78,15 @@ export default function Hero() {
           >
             Get In Touch
           </motion.a>
+        </motion.div>
+
+        {/* Stats Row */}
+        <motion.div className="flex items-center gap-6 flex-wrap text-gray-400 text-sm md:text-base" style={{ opacity: 1 }}>
+          <span>3+ Years Experience</span>
+          <span className="text-accent-lime">·</span>
+          <span>5+ Projects Shipped</span>
+          <span className="text-accent-lime">·</span>
+          <span>Open to Work</span>
         </motion.div>
       </motion.div>
 

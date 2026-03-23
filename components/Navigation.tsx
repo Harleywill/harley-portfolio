@@ -10,6 +10,7 @@ export default function Navigation() {
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Resume', href: '/HarleyWilliamsCV.pdf', isButton: true },
   ]
 
   return (
@@ -26,16 +27,30 @@ export default function Navigation() {
         </motion.a>
 
         {/* Desktop menu */}
-        <div className="hidden md:flex gap-12 items-center">
+        <div className="hidden md:flex gap-8 items-center">
           {navLinks.map((link) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              className="text-text-secondary text-lg font-medium"
-              whileHover={{ color: '#c5ff41' }}
-            >
-              {link.label}
-            </motion.a>
+            link.isButton ? (
+              <motion.a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 border border-accent-orange text-accent-orange text-sm font-medium rounded-lg hover:bg-accent-orange/10 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {link.label}
+              </motion.a>
+            ) : (
+              <motion.a
+                key={link.label}
+                href={link.href}
+                className="text-text-secondary text-lg font-medium"
+                whileHover={{ color: '#c5ff41' }}
+              >
+                {link.label}
+              </motion.a>
+            )
           ))}
         </div>
 
@@ -72,15 +87,29 @@ export default function Navigation() {
           >
             <div className="flex flex-col gap-6 p-6">
               {navLinks.map((link) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-text-secondary text-lg font-medium hover:text-accent-lime transition-colors"
-                  whileHover={{ x: 5 }}
-                >
-                  {link.label}
-                </motion.a>
+                link.isButton ? (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                    className="px-4 py-2 border border-accent-orange text-accent-orange text-lg font-medium rounded-lg hover:bg-accent-orange/10 transition-colors text-center"
+                    whileHover={{ x: 5 }}
+                  >
+                    {link.label}
+                  </motion.a>
+                ) : (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="text-text-secondary text-lg font-medium hover:text-accent-lime transition-colors"
+                    whileHover={{ x: 5 }}
+                  >
+                    {link.label}
+                  </motion.a>
+                )
               ))}
             </div>
           </motion.div>
