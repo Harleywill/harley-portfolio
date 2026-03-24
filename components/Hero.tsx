@@ -82,9 +82,9 @@ export default function Hero() {
 
         {/* Stats Row */}
         <motion.div className="flex items-center gap-6 flex-wrap text-gray-400 text-sm md:text-base" style={{ opacity: 1 }}>
-          <span>3+ Years Experience</span>
+          <span>1.5 Years Experience</span>
           <span className="text-accent-lime">·</span>
-          <span>5+ Projects Shipped</span>
+          <span>2 Projects Launched</span>
           <span className="text-accent-lime">·</span>
           <span>Open to Work</span>
         </motion.div>

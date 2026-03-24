@@ -42,8 +42,12 @@ export default function About() {
           >
             <div className="relative w-48 h-48 md:w-56 md:h-56">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-lime to-accent-orange rounded-full opacity-20 blur-2xl"></div>
-              <div className="relative w-full h-full rounded-full border-2 border-accent-lime/40 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center overflow-hidden">
-                <div className="text-6xl md:text-7xl">👨‍💻</div>
+              <div className="relative w-full h-full rounded-full border-2 border-accent-lime/40 overflow-hidden">
+                <img
+                  src="/harley-profile.png"
+                  alt="Harley Williams"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </motion.div>
@@ -55,11 +59,11 @@ export default function About() {
             </h2>
 
             <p className="text-text-secondary text-base md:text-lg mb-6 leading-relaxed">
-              I'm a full-stack developer with 3+ years of experience building scalable web applications and solving complex technical challenges. My specialty is creating seamless user experiences backed by robust backend systems.
+              I'm a full-stack developer with 1.5 years of hands-on experience building scalable web applications and solving complex technical challenges. My specialty is creating seamless user experiences backed by robust backend systems.
             </p>
 
             <p className="text-text-secondary text-base md:text-lg mb-8 leading-relaxed">
-              I've shipped 5+ production projects including e-commerce platforms with Stripe payments, real-time analytics dashboards, and sophisticated order management systems. I'm passionate about clean code, performance optimization, and delivering products that users love.
+              I've launched 2 production projects including a full-featured e-commerce platform with Stripe payments and real-time analytics dashboard. I'm passionate about clean code, performance optimization, and delivering products that users love.
             </p>
 
             <div className="flex gap-4 flex-wrap">
