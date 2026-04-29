@@ -5,7 +5,21 @@ const projects = [
     title: 'NTS Ltd - HVAC Services Website',
     description: 'Modern Next.js website for NTS Ltd, a mechanical and electrical services company in Hull. Features custom admin dashboard for managing projects, testimonials, and news. Includes dynamic service pages, project galleries with image uploads, client testimonials carousel, and a professional portfolio section showcasing completed installations.',
     technologies: ['Next.js 16', 'TypeScript', 'Tailwind CSS', 'Prisma', 'SQLite', 'Framer Motion'],
-    link: 'https://ntsltd.com',
+    link: 'https://www.ntslimited.org',
+    accentColor: 'lime' as const,
+  },
+  {
+    title: 'MEPM Services - Mechanical Services Website',
+    description: 'Professional website for MEPM Services showcasing their mechanical services offerings. Built with modern Next.js architecture featuring service catalogs, project portfolios, client testimonials, and comprehensive contact management systems.',
+    technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Responsive Design'],
+    link: 'https://www.mepmservices.co.uk',
+    accentColor: 'lime' as const,
+  },
+  {
+    title: 'JDBM Building Contractors - Services Website',
+    description: 'Modern website for JDBM Building Contractors Ltd featuring their building services, completed projects showcase, and client testimonials. Designed to establish strong online presence and attract new construction projects.',
+    technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Portfolio Display'],
+    link: 'https://www.jdbuildingcontractorsltd.co.uk',
     accentColor: 'lime' as const,
   },
   {
