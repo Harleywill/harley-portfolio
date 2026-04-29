@@ -14,6 +14,7 @@ const projects = [
     technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Responsive Design'],
     link: 'https://www.mepmservices.co.uk',
     accentColor: 'lime' as const,
+    underDevelopment: true,
   },
   {
     title: 'JDBM Building Contractors - Services Website',
@@ -21,6 +22,7 @@ const projects = [
     technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Portfolio Display'],
     link: 'https://www.jdbuildingcontractorsltd.co.uk',
     accentColor: 'lime' as const,
+    underDevelopment: true,
   },
   {
     title: 'TRVentilation',
@@ -92,7 +94,7 @@ export default function Projects() {
                 ))}
               </div>
 
-              {project.link && (
+              {project.link && !project.underDevelopment && (
                 <a
                   href={project.link}
                   target="_blank"
@@ -101,6 +103,14 @@ export default function Projects() {
                 >
                   View Project →
                 </a>
+              )}
+              {project.underDevelopment && (
+                <button
+                  disabled
+                  className="inline-block font-semibold py-3 px-6 rounded-lg w-fit relative z-10 text-sm sm:text-base bg-gray-600 text-gray-300 cursor-not-allowed opacity-60"
+                >
+                  🚀 Under Development
+                </button>
               )}
             </div>
           ))}
