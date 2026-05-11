@@ -5,7 +5,7 @@ const projects = [
     title: 'NTS Ltd - HVAC Services Website',
     description: 'Modern Next.js website for NTS Ltd, a mechanical and electrical services company in Hull. Features custom admin dashboard for managing projects, testimonials, and news. Includes dynamic service pages, project galleries with image uploads, client testimonials carousel, and a professional portfolio section showcasing completed installations.',
     technologies: ['Next.js 16', 'TypeScript', 'Tailwind CSS', 'Prisma', 'SQLite', 'Framer Motion'],
-    link: 'https://www.ntslimited.org',
+    link: 'https://nevilletuckerservices.co.uk',
     accentColor: 'lime' as const,
   },
   {
