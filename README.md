@@ -1,34 +1,54 @@
 # Harley Williams - Portfolio Website
 
-A modern, responsive portfolio website showcasing full-stack development projects and skills. Built with Next.js, TypeScript, and Tailwind CSS.
+A modern, responsive portfolio website showcasing full-stack development projects and skills. Built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and modern web technologies.
 
-## Features
+**Live Site:** [harleywilliams.co.uk](https://harleywilliams.co.uk)
 
-- **Dark Theme with Accent Colors**: Lime green (#c5ff41) and orange (#f46c38) accents
-- **Responsive Design**: Mobile-first approach, works seamlessly on all devices
-- **Smooth Animations**: Fade-in and slide-up animations on page load
-- **Project Showcase**: Featured projects with descriptions and tech stack
-- **Skills Section**: Organized by categories (Frontend, Backend, DevOps, Other)
-- **Contact Form**: Easy way for visitors to get in touch
-- **Navigation**: Fixed header with smooth scrolling
-- **Performance Optimized**: Static export for fast loading times
+---
 
-## Tech Stack
+## ✨ Features
 
-- **Framework**: Next.js 15 with TypeScript
-- **Styling**: Tailwind CSS 3
-- **Fonts**: Google Fonts (Poppins)
-- **Build**: Static export for VPS deployment
+- **Modern Dark Theme** - Sleek dark interface with lime green (#c5ff41) and orange (#f46c38) accents
+- **Fully Responsive** - Mobile-first design that works seamlessly across all devices
+- **Smooth Animations** - Elegant fade-in and slide-up animations powered by Framer Motion
+- **Project Showcase** - Featured projects with detailed descriptions and tech stacks
+- **Skills Section** - Organized by expertise areas (Frontend, Backend, DevOps, Tools)
+- **Contact Form** - Easy way for visitors and potential clients to get in touch
+- **Fixed Navigation** - Smooth scrolling navigation with dark theme
+- **High Performance** - Optimized for fast loading and great user experience
+- **3D Graphics** - Interactive 3D elements using Three.js and OGL
 
-## Getting Started
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | Next.js 15 (App Router) + TypeScript |
+| **Styling** | Tailwind CSS 3 |
+| **Animations** | Framer Motion |
+| **3D Graphics** | Three.js, OGL |
+| **Charts** | Recharts |
+| **Email** | Nodemailer |
+| **Icons** | FontAwesome |
+| **Font** | Poppins (Google Fonts) |
+| **Deployment** | VPS (PM2) |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
+- Node.js 18+
+- npm or yarn
 
-- Node.js 18+ and npm
-
-### Development
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/Harleywill/harley-portfolio.git
+cd harley-portfolio
+
 # Install dependencies
 npm install
 
@@ -36,174 +56,166 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view the portfolio in development mode.
 
-### Build
+### Development Commands
 
 ```bash
-# Create optimized production build
+# Start development server (with hot reload)
+npm run dev
+
+# Build for production
 npm run build
 
-# Build output will be in the `out/` directory
+# Start production server
+npm start
+
+# Run linting
+npm run lint
+
+# Static export (for VPS deployment)
+npm run export
 ```
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 harley-portfolio/
 ├── app/
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Home page
-│   └── globals.css         # Global styles
+│   ├── layout.tsx           # Root layout with navigation
+│   ├── page.tsx             # Homepage
+│   ├── globals.css          # Global styles and Tailwind imports
+│   └── api/                 # API routes (if any)
 ├── components/
-│   ├── Hero.tsx            # Hero section
-│   ├── Projects.tsx        # Projects showcase
-│   ├── ProjectCard.tsx     # Individual project card
-│   ├── Skills.tsx          # Skills section
-│   ├── Contact.tsx         # Contact form
-│   ├── Navigation.tsx      # Fixed navigation bar
-│   └── Footer.tsx          # Footer with social links
-├── tailwind.config.ts      # Tailwind configuration
-└── package.json            # Dependencies and scripts
+│   ├── Hero.tsx             # Hero/intro section
+│   ├── Projects.tsx         # Projects showcase grid
+│   ├── ProjectCard.tsx      # Individual project card component
+│   ├── Skills.tsx           # Skills breakdown by category
+│   ├── Contact.tsx          # Contact form with validation
+│   ├── Navigation.tsx       # Fixed header navigation
+│   └── Footer.tsx           # Footer with social links
+├── public/                  # Static assets (images, icons)
+├── tailwind.config.ts       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
+├── next.config.js           # Next.js configuration
+└── package.json             # Dependencies and scripts
 ```
 
-## Customization
+---
 
-### Update Contact Information
+## 🎨 Customization
 
-Edit `components/Contact.tsx`:
-- Change email address in the mailto link
-- Update LinkedIn and GitHub URLs
-- Add social media links in Footer component
+### Update Your Information
 
-### Update Projects
+**Contact Details** (`components/Contact.tsx`):
+- Change email address in form submission
+- Update LinkedIn and GitHub profile URLs
+- Modify contact form fields as needed
 
-Edit `components/Projects.tsx`:
-- Modify the `projects` array with your projects
-- Update project titles, descriptions, and technologies
-- Add project links
+**Featured Projects** (`components/Projects.tsx`):
+- Edit the `projects` array
+- Add project titles, descriptions, and technologies
+- Include project links and live demos
+- Update project images
 
-### Update Skills
-
-Edit `components/Skills.tsx`:
+**Skills** (`components/Skills.tsx`):
 - Modify `skillCategories` array
 - Add/remove skills in each category
-- Change category names and icons
+- Update category icons and colors
 
-### Update Colors
+**Colors & Theme** (`tailwind.config.ts`):
+- Modify the `colors` object to customize theme
+- Update lime green: `#c5ff41`
+- Update orange accent: `#f46c38`
+- Change to your preferred color scheme
 
-Edit `tailwind.config.ts`:
-- Modify color values in the `colors` section
-- Change lime: '#c5ff41' and orange: '#f46c38' to your preferred colors
+### Add Your Own Content
 
-## Deployment to VPS
+1. Update profile information in all component files
+2. Replace placeholder images in `/public` directory
+3. Add your actual projects with links and descriptions
+4. Customize the color scheme to match your brand
+5. Update social media links in Footer component
 
-### Step 1: Build the Project
+---
+
+## 🚀 Deployment
+
+### VPS Deployment (PM2)
+
+The portfolio is configured to run on a VPS using PM2 process manager with Next.js standalone mode.
 
 ```bash
+# Build for production
 npm run build
+
+# Push to your repository
+git push origin main
+
+# On VPS: Pull and restart
+pm2 restart harley-portfolio
+```
+
+### Static Export (Nginx)
+
+Alternative: Build as static site for Nginx:
+
+```bash
+# Create static export
+npm run export
+
 # Output will be in the `out/` directory
+# Copy to your web server: scp -r out/* user@server:/var/www/portfolio/
 ```
 
-### Step 2: SSH into Your VPS
+---
 
-```bash
-ssh root@72.62.6.180
-```
+## 📊 Performance
 
-### Step 3: Create Directory and Copy Files
+- ⚡ **Fast Page Load** - Optimized for Core Web Vitals
+- 🎯 **SEO Optimized** - Proper meta tags and structured data
+- 📦 **Code Splitting** - Automatic route-based code splitting
+- 🖼️ **Image Optimization** - Next.js Image component for responsive images
+- 💾 **Caching** - Browser caching enabled for repeat visits
+- 🗜️ **Compression** - GZIP compression for assets
 
-```bash
-# Create directory for portfolio
-mkdir -p /var/www/harley-portfolio
+---
 
-# From your local machine, copy the build output
-scp -r out/* root@72.62.6.180:/var/www/harley-portfolio/
-```
+## 🌐 Browser Support
 
-### Step 4: Configure Nginx
+| Browser | Version | Status |
+|---------|---------|--------|
+| Chrome/Edge | 90+ | ✅ Full support |
+| Firefox | 88+ | ✅ Full support |
+| Safari | 14+ | ✅ Full support |
+| iOS Safari | 14+ | ✅ Full support |
+| Chrome Mobile | Latest | ✅ Full support |
 
-Create a new Nginx configuration file:
+---
 
-```bash
-nano /etc/nginx/sites-available/harley-portfolio
-```
-
-Add this configuration:
-
-```nginx
-server {
-    server_name harley.com www.harley.com;
-    root /var/www/harley-portfolio;
-    index index.html;
-
-    listen 80;
-    listen [::]:80;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript;
-}
-```
-
-Enable the site:
-
-```bash
-ln -s /etc/nginx/sites-available/harley-portfolio /etc/nginx/sites-enabled/
-nginx -t  # Test configuration
-systemctl reload nginx
-```
-
-### Step 5: Set Up SSL Certificate (Free with Let's Encrypt)
-
-```bash
-# Install certbot if not already installed
-apt install certbot python3-certbot-nginx
-
-# Generate certificate
-certbot --nginx -d harley.com -d www.harley.com
-```
-
-### Step 6: Point Domain DNS
-
-In your domain registrar (Hostinger, GoDaddy, etc.):
-- Create an **A record** pointing to your VPS IP: `72.62.6.180`
-- For both `harley.com` and `www.harley.com`
-
-It may take up to 24 hours for DNS to fully propagate.
-
-## Updating Your Portfolio
-
-After making changes:
-
-```bash
-# Build locally
-npm run build
-
-# Copy to VPS
-scp -r out/* root@72.62.6.180:/var/www/harley-portfolio/
-
-# Reload Nginx on VPS
-ssh root@72.62.6.180 'nginx -t && systemctl reload nginx'
-```
-
-## Performance
-
-- **Static Export**: No server-side rendering needed, instant loading
-- **Tailwind CSS**: Only includes used styles (~30KB gzipped)
-- **Image Optimization**: Responsive images with proper sizing
-- **Caching**: Browser caching enabled for fast repeat visits
-
-## Browser Support
-
-- Chrome/Edge 90+
-- Firefox 88+
-- Safari 14+
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## License
+## 📝 License
 
 © 2026 Harley Williams. All rights reserved.
+
+This is a personal portfolio website. Feel free to use this as inspiration for your own portfolio, but please do not copy the design or content directly.
+
+---
+
+## 🤝 Contributing
+
+This is a personal portfolio project. If you find any issues or have suggestions, feel free to open an issue on GitHub.
+
+---
+
+## 📬 Contact
+
+- **Website:** [harleywilliams.co.uk](https://harleywilliams.co.uk)
+- **Email:** hjakewilliams@gmail.com
+- **GitHub:** [@Harleywill](https://github.com/Harleywill)
+- **LinkedIn:** [Harley Williams](https://linkedin.com/in/harley-williams)
+
+---
+
+**Last Updated:** May 2026
