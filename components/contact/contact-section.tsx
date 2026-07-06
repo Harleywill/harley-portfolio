@@ -143,9 +143,13 @@ export function ContactSection(): ReactNode {
                   {loading ? "Sending..." : "Send message"}
                 </button>
 
-                {error && <p className="text-[13px] text-red-500">{error}</p>}
+                {error && (
+                  <p role="alert" className="text-[13px] text-red-500">
+                    {error}
+                  </p>
+                )}
                 {submitted && (
-                  <p className="text-[13px] text-foreground/70">
+                  <p role="status" aria-live="polite" className="text-[13px] text-foreground/70">
                     Thanks for reaching out! I&rsquo;ll get back to you soon.
                   </p>
                 )}
