@@ -13,7 +13,7 @@ export default function ProjectsPage(): ReactNode {
   return (
     <main id="main-content" className="flex flex-1 flex-col gap-20 sm:gap-28">
       <div className="pt-40 sm:pt-56">
-        <Projects withHeadline />
+        <Projects withHeadline headingLevel="h1" />
       </div>
       <div className="h-12 sm:h-16" />
     </main>

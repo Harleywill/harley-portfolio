@@ -73,17 +73,22 @@ const PROJECTS: Project[] = [
 
 export type ProjectsProps = {
   withHeadline?: boolean;
+  headingLevel?: "h1" | "h2";
 };
 
-export function Projects({ withHeadline = false }: ProjectsProps): ReactNode {
+export function Projects({
+  withHeadline = false,
+  headingLevel = "h2",
+}: ProjectsProps): ReactNode {
+  const Heading = headingLevel;
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         {withHeadline ? (
           <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
-            <h2 className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3rem] lg:text-[3.5rem]">
+            <Heading className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3rem] lg:text-[3.5rem]">
               My projects
-            </h2>
+            </Heading>
             <p className="max-w-[33ch] text-[18px] leading-[1.45] tracking-tight text-foreground/65 sm:text-[20px]">
               Full-stack development work, with a focus on scalable
               architecture and exceptional user experiences.
