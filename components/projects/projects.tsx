@@ -1,0 +1,169 @@
+import { ArrowRight, Code2 } from "lucide-react";
+import type { ReactNode } from "react";
+
+import { FadeIn } from "@/components/ui/motion-primitives";
+
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  link?: string;
+  underDevelopment?: boolean;
+};
+
+const PROJECTS: Project[] = [
+  {
+    id: "nts",
+    title: "NTS Ltd - HVAC Services Website",
+    description:
+      "Modern Next.js website for NTS Ltd, a mechanical and electrical services company in Hull. Features custom admin dashboard for managing projects, testimonials, and news. Includes dynamic service pages, project galleries with image uploads, client testimonials carousel, and a professional portfolio section showcasing completed installations.",
+    technologies: ["Next.js 16", "TypeScript", "Tailwind CSS", "Prisma", "SQLite", "Framer Motion"],
+    link: "https://nevilletuckerservices.co.uk",
+  },
+  {
+    id: "mepm",
+    title: "MEPM Services - Mechanical Services Website",
+    description:
+      "Professional website for MEPM Services showcasing their mechanical services offerings. Built with modern Next.js architecture featuring service catalogs, project portfolios, client testimonials, and comprehensive contact management systems.",
+    technologies: ["Next.js 15", "TypeScript", "Tailwind CSS", "Responsive Design"],
+    link: "https://www.mepmservices.co.uk",
+    underDevelopment: true,
+  },
+  {
+    id: "jdbm",
+    title: "JDBM Building Contractors - Services Website",
+    description:
+      "Modern website for JDBM Building Contractors Ltd featuring their building services, completed projects showcase, and client testimonials. Designed to establish strong online presence and attract new construction projects.",
+    technologies: ["Next.js 15", "TypeScript", "Tailwind CSS", "Portfolio Display"],
+    link: "https://www.jdbuildingcontractorsltd.co.uk",
+    underDevelopment: true,
+  },
+  {
+    id: "trventilation",
+    title: "TRVentilation",
+    description:
+      "Full-stack e-commerce platform for ventilation products. Features include product catalog, shopping cart, order management, Stripe payments, email notifications, admin dashboard with analytics, and inventory management.",
+    technologies: ["React", "Node.js", "MongoDB", "Stripe", "Express", "Tailwind"],
+    link: "https://trventilation.com",
+  },
+  {
+    id: "analytics-dashboard",
+    title: "E-Commerce Analytics Dashboard",
+    description:
+      "Real-time analytics dashboard integrated with Google Analytics 4. Displays key metrics like active users, sessions, page views, bounce rate with customizable time filters and automated performance monitoring.",
+    technologies: ["React", "GA4 API", "Analytics", "Dashboard", "Node.js"],
+    link: "https://analytics.google.com",
+  },
+  {
+    id: "product-management",
+    title: "Advanced Product Management System",
+    description:
+      "Dynamic product management system with real-time category updates, image upload optimization, SEO enhancements, and inventory tracking. Features advanced search, filtering, and product recommendations.",
+    technologies: ["React", "Node.js", "MongoDB", "Multer", "SEO"],
+  },
+  {
+    id: "payment-processing",
+    title: "Payment & Order Processing",
+    description:
+      "Robust payment processing with Stripe integration, order tracking, PDF invoice generation, and email notifications. Supports multiple order statuses with automated workflows and shipment tracking.",
+    technologies: ["Stripe API", "Node.js", "Email Service", "PDF Generation"],
+  },
+];
+
+export type ProjectsProps = {
+  withHeadline?: boolean;
+};
+
+export function Projects({ withHeadline = false }: ProjectsProps): ReactNode {
+  return (
+    <section className="relative w-full">
+      <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
+        {withHeadline ? (
+          <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
+            <h2 className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3rem] lg:text-[3.5rem]">
+              My projects
+            </h2>
+            <p className="max-w-[33ch] text-[18px] leading-[1.45] tracking-tight text-foreground/65 sm:text-[20px]">
+              Full-stack development work, with a focus on scalable
+              architecture and exceptional user experiences.
+            </p>
+          </FadeIn>
+        ) : null}
+
+        <div className="columns-1 gap-6 md:columns-2 md:gap-7">
+          {PROJECTS.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}): ReactNode {
+  return (
+    <FadeIn
+      delay={Math.min(index * 0.06, 0.3)}
+      className="mb-6 break-inside-avoid md:mb-7"
+    >
+      <article className="project-card flex flex-col gap-4 rounded-3xl border border-foreground/8 bg-background p-3 sm:p-3.5">
+        <header className="flex items-center gap-2.5 px-1 pt-2">
+          <span className="border-foreground/10 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-background">
+            <Code2 className="h-3.5 w-3.5 text-foreground" aria-hidden="true" />
+          </span>
+          <span className="text-sm font-medium tracking-tight text-foreground">
+            {project.title}
+          </span>
+        </header>
+
+        <div className="project-card__image ring-foreground/5 relative w-full overflow-hidden rounded-2xl bg-foreground/5 ring-1 aspect-[4/3]">
+          <div className="project-card__image-inner bg-gradient-to-br from-foreground/10 via-foreground/5 to-transparent" />
+        </div>
+
+        <div className="flex flex-col gap-2.5 px-1 pb-1">
+          <p className="text-[14px] leading-normal tracking-tight text-foreground/65 sm:text-[15px]">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {project.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-foreground/8 bg-foreground/2 px-3 py-1 text-[12px] tracking-tight text-foreground/70 dark:bg-foreground/5"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-1 pb-2">
+          {project.link && !project.underDevelopment ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring group inline-flex items-center gap-1.5 text-[14px] font-medium tracking-tight text-foreground"
+            >
+              View project
+              <ArrowRight
+                className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </a>
+          ) : project.underDevelopment ? (
+            <span className="text-[14px] tracking-tight text-foreground/40">
+              Under development
+            </span>
+          ) : null}
+        </div>
+      </article>
+    </FadeIn>
+  );
+}
