@@ -1,37 +1,24 @@
-import Navigation from '@/components/Navigation'
-import Hero from '@/components/Hero'
-import About from '@/components/About'
-import Projects from '@/components/Projects'
-import AdminDemos from '@/components/AdminDemos'
-import Skills from '@/components/Skills'
-import Contact from '@/components/Contact'
-import Footer from '@/components/Footer'
-import Aurora from '@/components/Aurora'
+import { ContactSection } from "@/components/contact/contact-section";
+import { Footer } from "@/components/layout/footer";
+import { Hero } from "@/components/hero/hero";
+import { Projects } from "@/components/projects/projects";
+import { createMetadata, siteConfig } from "@/lib/metadata";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
-export default function Home() {
+export const metadata: Metadata = createMetadata({
+  title: "Home",
+  description: `Welcome to ${siteConfig.name}'s portfolio. ${siteConfig.description}`,
+  path: "/",
+});
+
+export default function HomePage(): ReactNode {
   return (
-    <main className="min-h-screen overflow-hidden" style={{ background: 'transparent', position: 'static' }}>
-      <Aurora />
-
-      <Navigation />
-
-      <div className="pt-16 relative z-10">
-        <Hero />
-        <About />
-      </div>
-
-      <div className="relative z-10">
-        <Projects />
-
-        <AdminDemos />
-
-        <section id="skills">
-          <Skills />
-        </section>
-
-        <Contact />
-        <Footer />
-      </div>
+    <main id="main-content" className="flex flex-1 flex-col gap-20 sm:gap-28">
+      <Hero />
+      <Projects withHeadline />
+      <ContactSection />
+      <Footer />
     </main>
-  )
+  );
 }
