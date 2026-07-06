@@ -1,0 +1,58 @@
+import { Education } from "@/components/about/education";
+import { Experience } from "@/components/about/experience";
+import { Skills } from "@/components/about/skills";
+import { Stack } from "@/components/about/stack";
+import { ContactSection } from "@/components/contact/contact-section";
+import { FadeIn } from "@/components/ui/motion-primitives";
+import { createMetadata } from "@/lib/metadata";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+
+export const metadata: Metadata = createMetadata({
+  title: "About",
+  description: "About me, background, and how to get in touch.",
+  path: "/about",
+});
+
+export default function AboutPage(): ReactNode {
+  return (
+    <main id="main-content" className="flex flex-1 flex-col">
+      <section className="mx-auto w-full max-w-160 px-6 pt-40 pb-16 sm:px-10 sm:pt-56 sm:pb-24">
+        <FadeIn>
+          <div className="rounded-4xl border border-foreground/5 bg-foreground/1.5 p-8 sm:p-12 dark:bg-foreground/3">
+            <h1 className="font-serif text-[1.75rem] font-medium tracking-tight text-foreground sm:text-[2rem]">
+              Hello! I&rsquo;m <span className="border-b border-foreground/30 pb-0.5">Harley Williams</span>.
+            </h1>
+            <div className="mt-8 space-y-6 text-[17px] leading-[1.7] tracking-tight text-foreground/75 sm:text-[18px]">
+              <p>
+                I&rsquo;m a <strong className="font-semibold text-foreground">full-stack developer</strong> with
+                hands-on experience building scalable web applications and solving complex technical challenges. My
+                specialty is creating seamless user experiences backed by robust backend systems.
+              </p>
+              <p>
+                I&rsquo;ve launched multiple production projects including a full-featured e-commerce platform with
+                Stripe payments and real-time analytics dashboards. I&rsquo;m passionate about{" "}
+                <strong className="font-semibold text-foreground">clean code, performance optimization</strong>, and
+                delivering products that users love.
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      <section className="mx-auto w-full max-w-[40rem] px-6 pb-20 sm:px-10 sm:pb-28">
+        <FadeIn delay={0.1}>
+          <div className="flex flex-col gap-10">
+            <Experience />
+            <Education />
+            <Skills />
+            <Stack />
+          </div>
+        </FadeIn>
+      </section>
+
+      <ContactSection />
+      <div className="h-12 sm:h-16" />
+    </main>
+  );
+}
