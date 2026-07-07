@@ -36,6 +36,14 @@ export default function AboutPage(): ReactNode {
                 delivering products that users love.
               </p>
             </div>
+            <a
+              href="/HarleyWilliamsCV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring mt-8 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            >
+              Download CV
+            </a>
           </div>
         </FadeIn>
       </section>
