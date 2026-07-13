@@ -1,4 +1,5 @@
 import { ArrowRight, Code2 } from "lucide-react";
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
@@ -10,6 +11,7 @@ type Project = {
   technologies: string[];
   link?: string;
   underDevelopment?: boolean;
+  image?: string;
 };
 
 const PROJECTS: Project[] = [
@@ -20,6 +22,7 @@ const PROJECTS: Project[] = [
       "Modern Next.js website for NTS Ltd, a mechanical and electrical services company in Hull. Features custom admin dashboard for managing projects, testimonials, and news. Includes dynamic service pages, project galleries with image uploads, client testimonials carousel, and a professional portfolio section showcasing completed installations.",
     technologies: ["Next.js 16", "TypeScript", "Tailwind CSS", "Prisma", "SQLite", "Framer Motion"],
     link: "https://nevilletuckerservices.co.uk",
+    image: "/projects/nts.jpg",
   },
   {
     id: "mepm",
@@ -29,6 +32,7 @@ const PROJECTS: Project[] = [
     technologies: ["Next.js 15", "TypeScript", "Tailwind CSS", "Responsive Design"],
     link: "https://www.mepmservices.co.uk",
     underDevelopment: true,
+    image: "/projects/mepm.jpg",
   },
   {
     id: "jdbm",
@@ -38,6 +42,7 @@ const PROJECTS: Project[] = [
     technologies: ["Next.js 15", "TypeScript", "Tailwind CSS", "Portfolio Display"],
     link: "https://www.jdbuildingcontractorsltd.co.uk",
     underDevelopment: true,
+    image: "/projects/jdbm.jpg",
   },
   {
     id: "trventilation",
@@ -46,6 +51,7 @@ const PROJECTS: Project[] = [
       "Full-stack e-commerce platform for ventilation products. Features include product catalog, shopping cart, order management, Stripe payments, email notifications, admin dashboard with analytics, and inventory management.",
     technologies: ["React", "Node.js", "MongoDB", "Stripe", "Express", "Tailwind"],
     link: "https://trventilation.com",
+    image: "/projects/trventilation.jpg",
   },
   {
     id: "analytics-dashboard",
@@ -129,7 +135,19 @@ function ProjectCard({
         </header>
 
         <div className="project-card__image ring-foreground/5 relative w-full overflow-hidden rounded-2xl bg-foreground/5 ring-1 aspect-[4/3]">
-          <div className="project-card__image-inner bg-gradient-to-br from-foreground/10 via-foreground/5 to-transparent" />
+          {project.image ? (
+            <div className="project-card__image-inner">
+              <Image
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover object-top"
+              />
+            </div>
+          ) : (
+            <div className="project-card__image-inner bg-gradient-to-br from-foreground/10 via-foreground/5 to-transparent" />
+          )}
         </div>
 
         <div className="flex flex-col gap-2.5 px-1 pb-1">
