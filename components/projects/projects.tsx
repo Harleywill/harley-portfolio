@@ -48,32 +48,19 @@ const PROJECTS: Project[] = [
     id: "trventilation",
     title: "TRVentilation",
     description:
-      "Full-stack e-commerce platform for ventilation products. Features include product catalog, shopping cart, order management, Stripe payments, email notifications, admin dashboard with analytics, and inventory management.",
-    technologies: ["React", "Node.js", "MongoDB", "Stripe", "Express", "Tailwind"],
+      "Full-stack e-commerce platform for ventilation products. Features a full storefront with product catalog, shopping cart, and Stripe checkout; a real-time analytics dashboard integrated with Google Analytics 4; a product management system with image upload optimization, SEO tooling, and inventory tracking; and automated order processing with PDF invoice generation and email notifications.",
+    technologies: [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Stripe",
+      "Express",
+      "Tailwind",
+      "GA4 API",
+      "PDF Generation",
+    ],
     link: "https://trventilation.com",
     image: "/projects/trventilation.jpg",
-  },
-  {
-    id: "analytics-dashboard",
-    title: "E-Commerce Analytics Dashboard",
-    description:
-      "Real-time analytics dashboard integrated with Google Analytics 4. Displays key metrics like active users, sessions, page views, bounce rate with customizable time filters and automated performance monitoring.",
-    technologies: ["React", "GA4 API", "Analytics", "Dashboard", "Node.js"],
-    link: "https://analytics.google.com",
-  },
-  {
-    id: "product-management",
-    title: "Advanced Product Management System",
-    description:
-      "Dynamic product management system with real-time category updates, image upload optimization, SEO enhancements, and inventory tracking. Features advanced search, filtering, and product recommendations.",
-    technologies: ["React", "Node.js", "MongoDB", "Multer", "SEO"],
-  },
-  {
-    id: "payment-processing",
-    title: "Payment & Order Processing",
-    description:
-      "Robust payment processing with Stripe integration, order tracking, PDF invoice generation, and email notifications. Supports multiple order statuses with automated workflows and shipment tracking.",
-    technologies: ["Stripe API", "Node.js", "Email Service", "PDF Generation"],
   },
 ];
 
