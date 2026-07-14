@@ -35,8 +35,8 @@ export function Hero(): ReactNode {
             <div className="relative aspect-square w-full md:max-w-105 overflow-hidden rounded-4xl border border-foreground/8 bg-background p-1.5 shadow-sm">
               <div className="relative h-full w-full overflow-hidden rounded-[1.6rem]">
                 <Image
-                  src="/harley-portrait.jpg"
-                  alt="Harley Williams"
+                  src="/harley-graduation.jpg"
+                  alt="Harley Williams at his graduation with family"
                   fill
                   sizes="(min-width: 768px) 420px, 100vw"
                   className="object-cover"

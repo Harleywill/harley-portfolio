@@ -16,20 +16,24 @@ export async function POST(request: NextRequest) {
 
     // Send email in background (completely non-blocking)
     if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      console.log(`📧 Starting email send process for ${name}...`)
       // Fire and forget - don't await, use setImmediate to ensure response is sent first
       setImmediate(async () => {
         try {
+          console.log(`📧 Importing nodemailer...`)
           const nodemailer = await import('nodemailer')
+          console.log(`📧 Creating Gmail transporter...`)
           const transporter = nodemailer.default.createTransport({
             service: 'gmail',
             auth: {
               user: process.env.GMAIL_USER,
               pass: process.env.GMAIL_APP_PASSWORD,
             },
-            connectionTimeout: 3000,
-            socketTimeout: 3000,
+            connectionTimeout: 5000,
+            socketTimeout: 5000,
           })
 
+          console.log(`📧 Sending email to ${RECIPIENT_EMAIL}...`)
           await transporter.sendMail({
             from: process.env.GMAIL_USER,
             to: RECIPIENT_EMAIL,
@@ -49,6 +53,8 @@ export async function POST(request: NextRequest) {
           console.error('❌ Error sending email:', err)
         }
       })
+    } else {
+      console.warn('⚠️ Gmail credentials not configured')
     }
 
     // Log the contact form submission
